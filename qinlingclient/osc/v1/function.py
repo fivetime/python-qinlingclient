@@ -88,6 +88,8 @@ def worker_count(value):
 
 
 class List(base.QinlingLister):
+    """List functions."""
+
     columns = base.FUNCTION_COLUMNS
     filtered_columns = base.FILTERED_FUNCTION_COLUMNS
 
@@ -98,6 +100,8 @@ class List(base.QinlingLister):
 
 
 class Create(command.ShowOne):
+    """Create a function."""
+
     columns = base.FUNCTION_COLUMNS
 
     def get_parser(self, prog_name):
@@ -260,6 +264,8 @@ class Create(command.ShowOne):
 
 
 class Delete(base.QinlingDeleter):
+    """Delete functions."""
+
     def get_parser(self, prog_name):
         parser = super(Delete, self).get_parser(prog_name)
 
@@ -288,6 +294,8 @@ class Delete(base.QinlingDeleter):
 
 
 class Show(command.ShowOne):
+    """Show a function."""
+
     columns = base.FUNCTION_COLUMNS
 
     def get_parser(self, prog_name):
@@ -310,6 +318,8 @@ class Show(command.ShowOne):
 
 
 class Update(command.ShowOne):
+    """Update a function."""
+
     columns = base.FUNCTION_COLUMNS
 
     def get_parser(self, prog_name):
@@ -424,6 +434,8 @@ class Update(command.ShowOne):
 
 
 class Detach(command.Command):
+    """Release the workers of a function."""
+
     def get_parser(self, prog_name):
         parser = super(Detach, self).get_parser(prog_name)
         parser.add_argument('function', help='Function ID.')
@@ -444,6 +456,8 @@ class Detach(command.Command):
 
 
 class Download(command.Command):
+    """Download the package of a function."""
+
     def get_parser(self, prog_name):
         parser = super(Download, self).get_parser(prog_name)
         parser.add_argument('function', help='Function ID or name.')
@@ -480,6 +494,8 @@ class Download(command.Command):
 
 
 class Scaleup(command.Command):
+    """Add workers to a function."""
+
     def get_parser(self, prog_name):
         parser = super(Scaleup, self).get_parser(prog_name)
         parser.add_argument('function', help='Function ID.')
@@ -502,6 +518,8 @@ class Scaleup(command.Command):
 
 
 class Scaledown(command.Command):
+    """Remove workers of a function."""
+
     def get_parser(self, prog_name):
         parser = super(Scaledown, self).get_parser(prog_name)
         parser.add_argument('function', help='Function ID.')

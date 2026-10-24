@@ -21,6 +21,8 @@ from qinlingclient import utils as q_utils
 
 
 class List(base.QinlingLister):
+    """List jobs."""
+
     columns = base.JOB_COLUMNS
     filtered_columns = base.FILTERED_JOB_COLUMNS
 
@@ -31,6 +33,8 @@ class List(base.QinlingLister):
 
 
 class Create(command.ShowOne):
+    """Create a job that runs a function on a schedule."""
+
     columns = base.JOB_COLUMNS
 
     def get_parser(self, prog_name):
@@ -106,6 +110,8 @@ class Create(command.ShowOne):
 
 
 class Delete(base.QinlingDeleter):
+    """Delete jobs."""
+
     def get_parser(self, prog_name):
         parser = super(Delete, self).get_parser(prog_name)
 
@@ -126,6 +132,8 @@ class Delete(base.QinlingDeleter):
 
 
 class Show(command.ShowOne):
+    """Show a job."""
+
     columns = base.JOB_COLUMNS
 
     def get_parser(self, prog_name):
@@ -142,6 +150,8 @@ class Show(command.ShowOne):
 
 
 class Update(command.ShowOne):
+    """Update a job."""
+
     columns = base.JOB_COLUMNS
 
     def get_parser(self, prog_name):

@@ -21,6 +21,8 @@ from qinlingclient import utils as q_utils
 
 
 class List(base.QinlingLister):
+    """List function executions."""
+
     columns = base.EXECUTION_COLUMNS
     filtered_columns = base.FILTERED_EXECUTION_COLUMNS
 
@@ -31,6 +33,8 @@ class List(base.QinlingLister):
 
 
 class Create(command.ShowOne):
+    """Run a function."""
+
     columns = base.EXECUTION_COLUMNS
 
     def get_parser(self, prog_name):
@@ -101,6 +105,8 @@ class Create(command.ShowOne):
 
 
 class Delete(base.QinlingDeleter):
+    """Delete function executions."""
+
     def get_parser(self, prog_name):
         parser = super(Delete, self).get_parser(prog_name)
 
@@ -133,6 +139,8 @@ class Delete(base.QinlingDeleter):
 
 
 class Show(command.ShowOne):
+    """Show a function execution."""
+
     columns = base.EXECUTION_COLUMNS
 
     def get_parser(self, prog_name):
@@ -149,6 +157,8 @@ class Show(command.ShowOne):
 
 
 class LogShow(command.Command):
+    """Show the log of a function execution."""
+
     def get_parser(self, prog_name):
         parser = super(LogShow, self).get_parser(prog_name)
         parser.add_argument('execution', help='Execution ID.')

@@ -16,6 +16,8 @@ from qinlingclient.osc.v1 import base
 
 
 class List(base.QinlingLister):
+    """List the workers of a function."""
+
     columns = base.WORKER_COLUMNS
 
     def get_parser(self, prog_name):

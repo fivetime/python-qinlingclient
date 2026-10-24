@@ -21,6 +21,8 @@ from qinlingclient import utils as q_utils
 
 
 class List(base.QinlingLister):
+    """List function aliases."""
+
     columns = base.FUNCTION_ALIAS_COLUMNS
     filtered_columns = base.FILTERED_FUNCTION_ALIAS_COLUMNS
 
@@ -31,6 +33,8 @@ class List(base.QinlingLister):
 
 
 class Create(command.ShowOne):
+    """Create a function alias."""
+
     columns = base.FUNCTION_ALIAS_COLUMNS
 
     def get_parser(self, prog_name):
@@ -79,6 +83,8 @@ class Create(command.ShowOne):
 
 
 class Delete(base.QinlingDeleter):
+    """Delete function aliases."""
+
     def get_parser(self, prog_name):
         parser = super(Delete, self).get_parser(prog_name)
 
@@ -100,6 +106,8 @@ class Delete(base.QinlingDeleter):
 
 
 class Show(command.ShowOne):
+    """Show a function alias."""
+
     columns = base.FUNCTION_ALIAS_COLUMNS
 
     def get_parser(self, prog_name):
@@ -121,6 +129,8 @@ class Show(command.ShowOne):
 
 
 class Update(command.ShowOne):
+    """Update a function alias."""
+
     columns = base.FUNCTION_ALIAS_COLUMNS
 
     def get_parser(self, prog_name):

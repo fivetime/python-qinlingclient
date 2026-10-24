@@ -21,6 +21,8 @@ from qinlingclient import utils as q_utils
 
 
 class List(base.QinlingLister):
+    """List webhooks."""
+
     columns = base.WEBHOOK_COLUMNS
     filtered_columns = base.FILTERED_WEBHOOK_COLUMNS
 
@@ -31,6 +33,8 @@ class List(base.QinlingLister):
 
 
 class Create(command.ShowOne):
+    """Create a webhook that runs a function."""
+
     columns = base.WEBHOOK_COLUMNS
 
     def get_parser(self, prog_name):
@@ -85,6 +89,8 @@ class Create(command.ShowOne):
 
 
 class Delete(base.QinlingDeleter):
+    """Delete webhooks."""
+
     def get_parser(self, prog_name):
         parser = super(Delete, self).get_parser(prog_name)
 
@@ -105,6 +111,8 @@ class Delete(base.QinlingDeleter):
 
 
 class Show(command.ShowOne):
+    """Show a webhook."""
+
     columns = base.WEBHOOK_COLUMNS
 
     def get_parser(self, prog_name):
@@ -121,6 +129,8 @@ class Show(command.ShowOne):
 
 
 class Update(command.ShowOne):
+    """Update a webhook."""
+
     columns = base.WEBHOOK_COLUMNS
 
     def get_parser(self, prog_name):

@@ -22,6 +22,8 @@ from qinlingclient import utils as q_utils
 
 
 class List(base.QinlingLister):
+    """List the versions of a function."""
+
     columns = base.FUNCTION_VERSION_COLUMNS
 
     def get_parser(self, prog_name):
@@ -41,6 +43,8 @@ class List(base.QinlingLister):
 
 
 class Create(command.ShowOne):
+    """Create a function version from the current function."""
+
     columns = base.FUNCTION_VERSION_COLUMNS
 
     def get_parser(self, prog_name):
@@ -75,6 +79,8 @@ class Create(command.ShowOne):
 
 
 class Delete(base.QinlingDeleter):
+    """Delete a function version."""
+
     def get_parser(self, prog_name):
         parser = super(Delete, self).get_parser(prog_name)
 
@@ -97,6 +103,8 @@ class Delete(base.QinlingDeleter):
 
 
 class Show(command.ShowOne):
+    """Show a function version."""
+
     columns = base.FUNCTION_VERSION_COLUMNS
 
     def get_parser(self, prog_name):
@@ -123,6 +131,8 @@ class Show(command.ShowOne):
 
 
 class Detach(command.Command):
+    """Release the workers of a function version."""
+
     def get_parser(self, prog_name):
         parser = super(Detach, self).get_parser(prog_name)
 

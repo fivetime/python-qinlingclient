@@ -19,6 +19,8 @@ from qinlingclient.osc.v1 import base
 
 
 class List(base.QinlingLister):
+    """List runtimes."""
+
     columns = base.RUNTIME_COLUMNS
 
     def _get_resources(self, parsed_args):
@@ -28,6 +30,8 @@ class List(base.QinlingLister):
 
 
 class Create(command.ShowOne):
+    """Create a runtime."""
+
     columns = base.RUNTIME_COLUMNS
 
     def get_parser(self, prog_name):
@@ -78,6 +82,8 @@ class Create(command.ShowOne):
 
 
 class Delete(base.QinlingDeleter):
+    """Delete runtimes."""
+
     def get_parser(self, prog_name):
         parser = super(Delete, self).get_parser(prog_name)
 
@@ -99,6 +105,8 @@ class Delete(base.QinlingDeleter):
 
 
 class Show(command.ShowOne):
+    """Show a runtime."""
+
     columns = base.RUNTIME_COLUMNS
 
     def get_parser(self, prog_name):
@@ -115,6 +123,8 @@ class Show(command.ShowOne):
 
 
 class Pool(command.ShowOne):
+    """Show the worker pool of a runtime."""
+
     columns = base.RUNTIME_POOL_COLUMNS
 
     def get_parser(self, prog_name):

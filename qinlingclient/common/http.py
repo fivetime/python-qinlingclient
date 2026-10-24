@@ -17,13 +17,13 @@ import copy
 import hashlib
 import os
 import socket
+import urllib.parse
 
-import keystoneclient.adapter as keystone_adapter
+from keystoneauth1 import adapter as keystone_adapter
 from oslo_log import log as logging
 from oslo_serialization import jsonutils
 from oslo_utils import encodeutils
 import requests
-from six.moves import urllib
 
 from qinlingclient.common import exceptions as exc
 
@@ -278,7 +278,7 @@ class HTTPClient(object):
 
 
 class SessionClient(keystone_adapter.Adapter):
-    """Qinling specific keystoneclient Adapter.
+    """Qinling specific keystoneauth Adapter.
 
     Qinling can't use keystoneclient LegacyJsonAdapter, because qinling has the
     check for right content-type for "update" operation which is

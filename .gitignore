@@ -2,7 +2,7 @@
 .idea/
 
 #virtualenv
-.venv/
+.venv
 
 #Build results
 build/

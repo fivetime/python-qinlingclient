@@ -86,7 +86,7 @@ class TestRuntime(test_client.TestQinlingClient):
 
         ret = self.client.runtimes.create(
             image_name, name=runtime_name, description=description,
-            trusted=False, is_public = False,
+            trusted=False, is_public=False,
         )
 
         self.assertEqual(RUNTIME_1, ret.to_dict())

@@ -1,0 +1,8 @@
+---
+features:
+  - |
+    ``openstack runtime create --orchestrator`` names the orchestrator of
+    the runtime (e.g. zun), and ``openstack function create`` and
+    ``openstack function update`` take ``--network`` and
+    ``--security-group`` (repeatable) for the functions Zun runs. Runtimes
+    show their orchestrator, functions their network and security groups.

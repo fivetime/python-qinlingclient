@@ -26,12 +26,14 @@ class RuntimeManager(base.ManagerWithFind):
         return self._list("/v1/runtimes", response_key='runtimes')
 
     def create(self, image, name=None, description=None,
-               is_public=True, trusted=True):
+               is_public=True, trusted=True, orchestrator=None):
         data = {'image': image, 'is_public': is_public, 'trusted': trusted}
         if name:
             data.update({'name': name})
         if description:
             data.update({'description': description})
+        if orchestrator:
+            data.update({'orchestrator': orchestrator})
 
         return self._create('/v1/runtimes', data)
 

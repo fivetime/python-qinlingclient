@@ -64,6 +64,13 @@ class Create(command.ShowOne):
             help="Create untrusted runtime or not, will create trusted "
                  "runtime if not specified",
         )
+        parser.add_argument(
+            "--orchestrator",
+            help="Orchestrator that runs the functions of the runtime, "
+                 "e.g. kubernetes or zun (one enabled in qinling); the "
+                 "default orchestrator of qinling if not specified. It "
+                 "cannot be changed later.",
+        )
 
         return parser
 
@@ -75,7 +82,8 @@ class Create(command.ShowOne):
             description=parsed_args.description,
             image=parsed_args.image,
             is_public=parsed_args.is_public,
-            trusted=parsed_args.trusted
+            trusted=parsed_args.trusted,
+            orchestrator=parsed_args.orchestrator
         )
 
         return self.columns, utils.get_item_properties(runtime, self.columns)

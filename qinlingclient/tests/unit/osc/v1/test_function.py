@@ -170,7 +170,8 @@ class TestFunction(fakes.TestQinlingClient):
             self.data.append((f.id, f.name, f.description, f.count, f.code,
                               f.runtime_id, f.entry, f.project_id,
                               f.created_at, f.updated_at,
-                              f.cpu, f.memory_size, f.timeout))
+                              f.cpu, f.memory_size, f.timeout, f.network,
+                              f.security_groups))
 
 
 class TestListFunction(TestFunction):
@@ -268,7 +269,8 @@ class TestCreateFunction(TestFunction):
         data = (f.id, f.name, f.description, f.count, f.code,
                 f.runtime_id, f.entry, f.project_id,
                 f.created_at, f.updated_at,
-                f.cpu, f.memory_size, f.timeout)
+                f.cpu, f.memory_size, f.timeout, f.network,
+                f.security_groups)
         return data
 
     def _get_verify_list(self, runtime=None, name=None, entry=None,
@@ -633,6 +635,25 @@ class TestCreateFunction(TestFunction):
         self.assertEqual(self.columns, columns)
         self.assertEqual(created_data, data)
 
+    def test_function_create_with_network(self):
+        code = {'source': 'image', 'image': self.image}
+        self._create_fake_function({'code': code, 'network': 'tenant-net',
+                                    'security_groups': ['web', 'db']})
+
+        arglist = ['--image', self.image, '--network', 'tenant-net',
+                   '--security-group', 'web', '--security-group', 'db']
+        verifylist = [('network', 'tenant-net'),
+                      ('security_groups', ['web', 'db'])]
+        parsed_args = self.check_parser(self.cmd, arglist, verifylist)
+        columns, data = self.cmd.take_action(parsed_args)
+
+        call_arguments = {'code': code, 'network': 'tenant-net',
+                          'security_groups': '["web", "db"]'}
+        call_arguments.update(self.base_call_arguments_default_values)
+        self.client.functions.create.assert_called_once_with(**call_arguments)
+        self.assertIn('network', columns)
+        self.assertIn('security_groups', columns)
+
     def test_function_create_timeout_invalid(self):
         arglist = ['--timeout', '-1']
         verifylist = self._get_verify_list(timeout=-1)
@@ -823,7 +844,8 @@ class TestUpdateFunction(TestFunction):
         data = (f.id, f.name, f.description, f.count, f.code,
                 f.runtime_id, f.entry, f.project_id,
                 f.created_at, f.updated_at,
-                f.cpu, f.memory_size, f.timeout)
+                f.cpu, f.memory_size, f.timeout, f.network,
+                f.security_groups)
         return data
 
     def _get_verify_list(self, function_id=None, name=None, description=None,

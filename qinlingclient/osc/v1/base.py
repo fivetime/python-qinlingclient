@@ -29,6 +29,7 @@ RUNTIME_COLUMNS = (
     'description',
     'is_public',
     'trusted',
+    'orchestrator',
     'project_id',
     'created_at',
     'updated_at'
@@ -50,7 +51,9 @@ FUNCTION_COLUMNS = (
     'updated_at',
     'cpu',
     'memory_size',
-    'timeout'
+    'timeout',
+    'network',
+    'security_groups'
 )
 FILTERED_FUNCTION_COLUMNS = (
     "all_projects",

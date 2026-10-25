@@ -11,6 +11,7 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
+import json
 import os
 import shutil
 import tempfile
@@ -25,6 +26,15 @@ from qinlingclient.osc.v1 import base
 from qinlingclient import utils as q_utils
 
 MAX_ZIP_SIZE = 50 * 1024 * 1024
+
+
+def _network_args(parsed_args):
+    args = {}
+    if parsed_args.network is not None:
+        args['network'] = parsed_args.network
+    if parsed_args.security_groups:
+        args['security_groups'] = json.dumps(parsed_args.security_groups)
+    return args
 
 
 def _get_package_file(package_path=None, file_path=None):
@@ -161,6 +171,22 @@ class Create(command.ShowOne):
                  "terminate the function. The default is 5 seconds",
         )
 
+        parser.add_argument(
+            "--network",
+            help="Network ID or name of the project to attach the function "
+                 "containers to (orchestrators that run them in the "
+                 "project, e.g. Zun).",
+        )
+        parser.add_argument(
+            "--security-group",
+            dest="security_groups",
+            metavar="SECURITY_GROUP",
+            action="append",
+            help="Security group of the function containers; repeat for "
+                 "more (orchestrators that run them in the project, e.g. "
+                 "Zun).",
+        )
+
         return parser
 
     def take_action(self, parsed_args):
@@ -210,7 +236,8 @@ class Create(command.ShowOne):
                     entry=parsed_args.entry,
                     cpu=parsed_args.cpu,
                     memory_size=parsed_args.memory_size,
-                    timeout=parsed_args.timeout
+                    timeout=parsed_args.timeout,
+                    **_network_args(parsed_args)
                 )
 
             # Delete zip file the client created
@@ -242,7 +269,8 @@ class Create(command.ShowOne):
                 entry=parsed_args.entry,
                 cpu=parsed_args.cpu,
                 memory_size=parsed_args.memory_size,
-                timeout=parsed_args.timeout
+                timeout=parsed_args.timeout,
+                **_network_args(parsed_args)
             )
 
         elif code_type == 'image':
@@ -257,7 +285,8 @@ class Create(command.ShowOne):
                 entry=parsed_args.entry,
                 cpu=parsed_args.cpu,
                 memory_size=parsed_args.memory_size,
-                timeout=parsed_args.timeout
+                timeout=parsed_args.timeout,
+                **_network_args(parsed_args)
             )
 
         return self.columns, utils.get_item_properties(function, self.columns)
@@ -381,6 +410,22 @@ class Update(command.ShowOne):
                  "terminate the function. The default is 5 seconds",
         )
 
+        parser.add_argument(
+            "--network",
+            help="Network ID or name of the project to attach the function "
+                 "containers to (orchestrators that run them in the "
+                 "project, e.g. Zun).",
+        )
+        parser.add_argument(
+            "--security-group",
+            dest="security_groups",
+            metavar="SECURITY_GROUP",
+            action="append",
+            help="Security group of the function containers; repeat for "
+                 "more (orchestrators that run them in the project, e.g. "
+                 "Zun).",
+        )
+
         return parser
 
     def take_action(self, parsed_args):
@@ -416,7 +461,8 @@ class Update(command.ShowOne):
                     entry=parsed_args.entry,
                     cpu=parsed_args.cpu,
                     memory_size=parsed_args.memory_size,
-                    timeout=parsed_args.timeout
+                    timeout=parsed_args.timeout,
+                    **_network_args(parsed_args)
                 )
         else:
             func = client.functions.update(
@@ -427,7 +473,8 @@ class Update(command.ShowOne):
                 entry=parsed_args.entry,
                 cpu=parsed_args.cpu,
                 memory_size=parsed_args.memory_size,
-                timeout=parsed_args.timeout
+                timeout=parsed_args.timeout,
+                **_network_args(parsed_args)
             )
 
         return self.columns, utils.get_item_properties(func, self.columns)

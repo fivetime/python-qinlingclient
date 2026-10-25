@@ -35,8 +35,8 @@ class TestRuntime(fakes.TestQinlingClient):
         self._runtimes = fakes.FakeRuntime.create_runtimes(count=3)
         for r in self._runtimes:
             self.data.append((r.id, r.name, r.image, r.status, r.description,
-                              r.is_public, r.trusted, r.project_id,
-                              r.created_at, r.updated_at))
+                              r.is_public, r.trusted, r.orchestrator,
+                              r.project_id, r.created_at, r.updated_at))
 
 
 class TestListRuntime(TestRuntime):
@@ -104,7 +104,7 @@ class TestCreateRuntime(TestRuntime):
         r = fakes.FakeRuntime.create_one_runtime(attrs)
         self.client.runtimes.create = mock.Mock(return_value=r)
         data = (r.id, r.name, r.image, r.status, r.description,
-                r.is_public, r.trusted, r.project_id,
+                r.is_public, r.trusted, r.orchestrator, r.project_id,
                 r.created_at, r.updated_at)
         return data
 
@@ -139,6 +139,7 @@ class TestCreateRuntime(TestRuntime):
             'image': image,
             'trusted': True,
             'is_public': True,
+            'orchestrator': None,
         })
         self.assertEqual(self.columns, columns)
         self.assertEqual(created_data, data)
@@ -178,8 +179,25 @@ class TestCreateRuntime(TestRuntime):
             'image': image,
             'trusted': trusted,
             'is_public': is_public,
+            'orchestrator': None,
         })
         self.assertEqual(self.columns, columns)
+        self.assertEqual(created_data, data)
+
+    def test_runtime_create_with_orchestrator(self):
+        image = 'specified-image-name'
+        created_data = self._create_fake_runtime(
+            {'image': image, 'orchestrator': 'zun'})
+
+        parsed_args = self.check_parser(
+            self.cmd, ['--orchestrator', 'zun', image],
+            [('image', image), ('orchestrator', 'zun')])
+        columns, data = self.cmd.take_action(parsed_args)
+
+        self.client.runtimes.create.assert_called_once_with(
+            name=None, description=None, image=image, trusted=True,
+            is_public=True, orchestrator='zun')
+        self.assertIn('orchestrator', columns)
         self.assertEqual(created_data, data)
 
 

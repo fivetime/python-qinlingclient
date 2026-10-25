@@ -71,6 +71,7 @@ class FakeRuntime(object):
             'description': 'runtime-description-' + uuid.uuid4().hex,
             'is_public': True,
             'trusted': True,
+            'orchestrator': None,
             'project_id': str(uuid.uuid4()),
             'created_at': '2018-07-26 09:00:00',
             'updated_at': '2018-07-26 09:00:30'
@@ -185,7 +186,9 @@ class FakeFunction(object):
             'updated_at': '2018-07-26 09:00:30',
             'cpu': 100,
             'memory_size': 33554432,
-            'timeout': 5
+            'timeout': 5,
+            'network': None,
+            'security_groups': None
         }
 
         # Overwrite default attributes.
